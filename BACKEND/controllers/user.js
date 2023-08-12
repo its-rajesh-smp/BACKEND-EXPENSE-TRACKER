@@ -81,8 +81,6 @@ exports.get = async (req, res) => {
   }
 };
 
-exports.update = async (req, res) => {};
-
 exports.getLeaderboard = async (req, res) => {
   try {
     const dbRes = await User.findAll({

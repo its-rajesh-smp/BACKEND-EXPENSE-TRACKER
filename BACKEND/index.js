@@ -14,11 +14,13 @@ app.use(express.json());
 const user = require("./routes/user");
 const expense = require("./routes/expense");
 const payment = require("./routes/payment");
+const forgotpassword = require("./routes/forgotPassword");
 
 // MIDDLEWARES
 app.use(user);
 app.use(expense);
 app.use(payment);
+app.use(forgotpassword);
 
 // RELATIONS
 require("./relations/relations")();
