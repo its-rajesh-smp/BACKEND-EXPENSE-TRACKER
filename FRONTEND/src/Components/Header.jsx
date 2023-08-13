@@ -50,12 +50,16 @@ function Header() {
         )}
 
         {premium && (
-          <NavLink
-            to="/leaderboard"
-            className=" hover:opacity-70  cursor-pointer"
-          >
-            Leaderboard
-          </NavLink>
+          <>
+            <NavLink
+              to="/leaderboard"
+              className=" hover:opacity-70  cursor-pointer"
+            >
+              Leaderboard
+            </NavLink>
+
+            <p>Download Report</p>
+          </>
         )}
       </div>
     </header>
