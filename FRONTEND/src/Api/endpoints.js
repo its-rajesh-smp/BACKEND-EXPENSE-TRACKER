@@ -9,6 +9,7 @@ export const PASSWORD_FORGOT_PASSWORD = `${host}/password/sendForgotPasswordEmai
 export const EXPENSE_GET = `${host}/expense`;
 export const EXPENSE_CREATE = `${host}/expense/create`;
 export const EXPENSE_DELETE = `${host}/expense/delete`;
+export const EXPENSE_DOWNLOAD = `${host}/expense/download`;
 
 export const PAYMENT_CREATE_ORDER = `${host}/payment/createOrder`;
 export const PAYMENT_SUCCESS = `${host}/payment/paymentSuccess`;

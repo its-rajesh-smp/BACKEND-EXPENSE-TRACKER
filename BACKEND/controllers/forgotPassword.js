@@ -38,7 +38,11 @@ exports.forgotpassword = async (req, res) => {
 
     const dbRes = await Forgotpassword.findOne({ where: { id: id } });
 
-    if (!dbRes || !dbRes.dataValues.isActive) {
+    if (!dbRes) {
+      res.status(404).send("LINK IS NOT VALID");
+      return;
+    }
+    if (dbRes.dataValues.isActive == 0) {
       res.status(404).send("LINK IS EXPIRED");
       return;
     }

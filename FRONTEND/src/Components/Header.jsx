@@ -1,9 +1,9 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { loginUserAct, logoutUserAct } from "../Store/Actions/authActions";
-import { logoutUser } from "../Store/Reducer/authSlice";
+import { logoutUserAct } from "../Store/Actions/authActions";
 import { buyPremiumAct } from "../Store/Actions/paymentActions";
+import { downloadExpenseAct } from "../Store/Actions/expenseActions";
 
 function Header() {
   const { auth, premium } = useSelector((state) => state.authSlice);
@@ -15,6 +15,10 @@ function Header() {
 
   const onClickBuyPremium = () => {
     dispatch(buyPremiumAct());
+  };
+
+  const onClickDownload = () => {
+    dispatch(downloadExpenseAct());
   };
 
   return (
@@ -58,7 +62,9 @@ function Header() {
               Leaderboard
             </NavLink>
 
-            <p>Download Report</p>
+            <p className=" cursor-pointer " onClick={onClickDownload}>
+              Download Report
+            </p>
           </>
         )}
       </div>

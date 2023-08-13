@@ -1,5 +1,6 @@
 const Expense = require("../models/expense");
 const User = require("../models/user");
+const s3UploadFile = require("../services/s3UploadFile");
 const sequelize = require("../utils/db");
 
 exports.create = async (req, res) => {
@@ -45,6 +46,31 @@ exports.delete = async (req, res) => {
   } catch (error) {
     await t.rollback();
     console.log(error);
+    res.status(404).send(error.message);
+  }
+};
+
+exports.download = async (req, res) => {
+  try {
+    const { user } = req;
+
+    // If User Not Premium User
+    if (!user.premium) {
+      res.status(404).send("USER NOT PREMIUM");
+      return;
+    }
+
+    // Getting All User Expenses
+    const dbRes = await Expense.findAll({ where: { userEmail: user.email } });
+
+    const jsonBody = JSON.stringify(dbRes);
+    const fileName = `${user.email} ${Date.now()}.txt`;
+
+    const downloadLink = await s3UploadFile(jsonBody, fileName);
+
+    res.send(downloadLink);
+  } catch (error) {
+    console.log(error.message);
     res.status(404).send(error.message);
   }
 };

@@ -1,5 +1,9 @@
 import axios from "axios";
-import { EXPENSE_CREATE, EXPENSE_DELETE } from "../../Api/endpoints";
+import {
+  EXPENSE_CREATE,
+  EXPENSE_DELETE,
+  EXPENSE_DOWNLOAD,
+} from "../../Api/endpoints";
 import { addExpense, deleteExpense } from "../Reducer/expenseSlice";
 import { updateUser } from "../Reducer/authSlice";
 
@@ -43,6 +47,30 @@ export const deleteExpenseAct = (id, price) => {
       dispatch(updateUser({ totalExpense: totalExpense - price }));
     } catch (error) {
       console.log(error);
+    }
+  };
+};
+
+export const downloadExpenseAct = () => {
+  return async (dispatch, getState) => {
+    try {
+      const email = getState().authSlice.email;
+      const localIdToken = localStorage.getItem("expensetracker_idToken");
+      if (!localIdToken) {
+        return;
+      }
+
+      const { data } = await axios.get(EXPENSE_DOWNLOAD, {
+        headers: { Authorization: localIdToken },
+      });
+
+      const a = document.createElement("a");
+      a.href = data;
+      a.download = `${email}-${new Date().getTime()}`;
+      a.click();
+    } catch (error) {
+      console.log(error);
+      alert(error.message);
     }
   };
 };
