@@ -15,12 +15,14 @@ const user = require("./routes/user");
 const expense = require("./routes/expense");
 const payment = require("./routes/payment");
 const forgotpassword = require("./routes/forgotPassword");
+const downloadUrl = require("./routes/downloadURL");
 
 // MIDDLEWARES
 app.use(user);
 app.use(expense);
 app.use(payment);
 app.use(forgotpassword);
+app.use(downloadUrl);
 
 // RELATIONS
 require("./relations/relations")();

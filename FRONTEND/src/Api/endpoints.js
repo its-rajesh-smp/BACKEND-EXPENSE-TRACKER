@@ -16,3 +16,6 @@ export const PAYMENT_SUCCESS = `${host}/payment/paymentSuccess`;
 export const PAYMENT_FAILED = `${host}/payment/paymentFailed`;
 
 export const GET_LEADERBOARD = `${host}/user/getLeaderboard`;
+
+export const DOWNLOADURL_GETALL = `${host}/downloadURL`;
+export const DOWNLOADURL_DOWNLOAD_ONE = `${host}/downloadURL/download`;

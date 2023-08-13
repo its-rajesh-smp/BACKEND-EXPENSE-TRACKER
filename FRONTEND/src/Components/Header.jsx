@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { logoutUserAct } from "../Store/Actions/authActions";
 import { buyPremiumAct } from "../Store/Actions/paymentActions";
 import { downloadExpenseAct } from "../Store/Actions/expenseActions";
+import { BiLoaderCircle } from "react-icons/bi";
 
 function Header() {
   const { auth, premium } = useSelector((state) => state.authSlice);
+  const [loader, setLoader] = useState(false);
   const dispatch = useDispatch();
 
   const onLogoutClick = () => {
@@ -18,7 +20,10 @@ function Header() {
   };
 
   const onClickDownload = () => {
-    dispatch(downloadExpenseAct());
+    if (!loader) {
+      setLoader(true);
+      dispatch(downloadExpenseAct(setLoader));
+    }
   };
 
   return (
@@ -33,12 +38,6 @@ function Header() {
 
         {auth && (
           <>
-            <p
-              onClick={onLogoutClick}
-              className=" hover:opacity-70  cursor-pointer"
-            >
-              Logout
-            </p>
             <NavLink to="/" className=" hover:opacity-70  cursor-pointer">
               Home
             </NavLink>
@@ -62,10 +61,33 @@ function Header() {
               Leaderboard
             </NavLink>
 
-            <p className=" cursor-pointer " onClick={onClickDownload}>
-              Download Report
+            <p
+              className=" flex items-center justify-center cursor-pointer "
+              onClick={onClickDownload}
+            >
+              {loader ? (
+                <BiLoaderCircle className=" animate-spin" />
+              ) : (
+                "Download Report"
+              )}
             </p>
+
+            <NavLink
+              to="/reporthistory"
+              className=" hover:opacity-70  cursor-pointer"
+            >
+              Report History
+            </NavLink>
           </>
+        )}
+
+        {auth && (
+          <p
+            onClick={onLogoutClick}
+            className=" hover:opacity-70  cursor-pointer"
+          >
+            Logout
+          </p>
         )}
       </div>
     </header>

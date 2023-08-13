@@ -1,5 +1,6 @@
 const Expense = require("../models/expense");
 const User = require("../models/user");
+const DownloadURL = require("../models/downloadURL");
 const s3UploadFile = require("../services/s3UploadFile");
 const sequelize = require("../utils/db");
 
@@ -68,7 +69,12 @@ exports.download = async (req, res) => {
 
     const downloadLink = await s3UploadFile(jsonBody, fileName);
 
-    res.send(downloadLink);
+    const downloadRes = await DownloadURL.create({
+      url: downloadLink,
+      userEmail: user.email,
+    });
+
+    res.send(downloadRes);
   } catch (error) {
     console.log(error.message);
     res.status(404).send(error.message);

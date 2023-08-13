@@ -4,6 +4,7 @@ import HomePage from "../Pages/HomePage";
 import LoginPage from "../Pages/LoginPage";
 import { useSelector } from "react-redux";
 import LeaderboardPage from "../Pages/LeaderboardPage";
+import ReportHistoryPage from "../Pages/ReportHistoryPage";
 
 function MyRoutes() {
   const { auth, premium } = useSelector((state) => state.authSlice);
@@ -15,7 +16,10 @@ function MyRoutes() {
           <Route element={<HomePage />} path="*" />
           <Route element={<HomePage />} path="/" />
           {premium && (
-            <Route element={<LeaderboardPage />} path="/leaderboard" />
+            <>
+              <Route element={<LeaderboardPage />} path="/leaderboard" />
+              <Route element={<ReportHistoryPage />} path="/reporthistory" />
+            </>
           )}
         </>
       ) : (

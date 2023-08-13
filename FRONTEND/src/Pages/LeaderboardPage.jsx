@@ -1,17 +1,11 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
+
 import { GET_LEADERBOARD } from "../Api/endpoints";
 import LeaderboardUser from "../Components/LeaderboardPage/LeaderboardUser";
+import useFetch from "../Hooks/useFetch";
 
 function LeaderboardPage() {
-  const [state, setState] = useState([]);
-
-  useEffect(() => {
-    (async () => {
-      const { data } = await axios.get(GET_LEADERBOARD);
-      setState(data);
-    })();
-  }, []);
+  const state = useFetch(GET_LEADERBOARD);
 
   return (
     <div className=" flex flex-col gap-5">

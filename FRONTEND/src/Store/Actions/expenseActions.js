@@ -6,6 +6,7 @@ import {
 } from "../../Api/endpoints";
 import { addExpense, deleteExpense } from "../Reducer/expenseSlice";
 import { updateUser } from "../Reducer/authSlice";
+import { addReport } from "../Reducer/reportHistorySlice";
 
 export const createExpenseAct = (name, price, category) => {
   return async (dispatch, getState) => {
@@ -51,12 +52,12 @@ export const deleteExpenseAct = (id, price) => {
   };
 };
 
-export const downloadExpenseAct = () => {
+export const downloadExpenseAct = (setLoader) => {
   return async (dispatch, getState) => {
     try {
-      const email = getState().authSlice.email;
       const localIdToken = localStorage.getItem("expensetracker_idToken");
       if (!localIdToken) {
+        setLoader(false);
         return;
       }
 
@@ -65,12 +66,15 @@ export const downloadExpenseAct = () => {
       });
 
       const a = document.createElement("a");
-      a.href = data;
-      a.download = `${email}-${new Date().getTime()}`;
+      a.href = data.url;
+      a.download = `${data.userEmail}-${new Date().getTime()}`;
       a.click();
+
+      dispatch(addReport(data));
     } catch (error) {
       console.log(error);
       alert(error.message);
     }
+    setLoader(false);
   };
 };
