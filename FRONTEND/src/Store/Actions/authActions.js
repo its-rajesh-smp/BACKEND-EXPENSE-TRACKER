@@ -25,8 +25,6 @@ export const loginUserAct = (email, password) => {
 
       localStorage.setItem("expensetracker_idToken", data.idToken);
 
-      dispatch(setExpenses(data.expenses));
-      delete data.expenses;
       dispatch(authUser(data));
     } catch (error) {
       console.log(error);
@@ -43,12 +41,6 @@ export const getUserAct = () => {
       }
 
       const { data } = await axios.post(USER_GET, { idToken: localIdToken });
-
-      console.log(data);
-
-      dispatch(setExpenses(data.expenses));
-
-      delete data.expenses;
 
       dispatch(authUser(data));
     } catch (error) {

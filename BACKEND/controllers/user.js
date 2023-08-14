@@ -27,7 +27,6 @@ exports.signin = async (req, res) => {
 
     const dbRes = await User.findOne({
       where: { email: email },
-      include: [Expense],
     });
 
     if (!dbRes) {
@@ -58,7 +57,6 @@ exports.get = async (req, res) => {
 
     const dbRes = await User.findOne({
       where: { email: email },
-      include: [Expense],
     });
 
     if (!dbRes) {

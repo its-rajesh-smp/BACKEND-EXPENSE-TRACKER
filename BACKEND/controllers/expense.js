@@ -29,7 +29,23 @@ exports.create = async (req, res) => {
   }
 };
 
-exports.get = async (req, res) => {};
+exports.get = async (req, res) => {
+  try {
+    const { limit, skip } = req.params;
+    const { user } = req;
+    const dbRes = await Expense.findAndCountAll({
+      where: { userEmail: user.email },
+      limit: +limit,
+      offset: +skip,
+      order: [["createdAt", "DESC"]],
+    });
+
+    res.send({ expenses: dbRes.rows, totalCount: dbRes.count });
+  } catch (error) {
+    console.log(error);
+    res.status(404).send(error.message);
+  }
+};
 
 exports.delete = async (req, res) => {
   const t = await sequelize.transaction();
