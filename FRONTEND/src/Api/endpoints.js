@@ -1,4 +1,4 @@
-const host = "http://localhost:5000";
+const host = "http://localhost:3000";
 
 export const USER_SIGNUP = `${host}/user/signup`;
 export const USER_SIGNIN = `${host}/user/signin`;

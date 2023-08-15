@@ -1,11 +1,25 @@
 require("dotenv").config();
 
+const fs = require("fs");
+const path = require("path");
+
 const express = require("express");
 const sequelize = require("./utils/db");
 const body_parser = require("body-parser");
 const cors = require("cors");
+const helmet = require("helmet");
+const compression = require("compression");
+const morgan = require("morgan");
+
+const accessLogSteam = fs.createWriteStream(
+  path.join(__dirname, "access.log"),
+  { flags: "a" }
+);
 
 const app = express();
+app.use(helmet());
+app.use(compression());
+app.use(morgan("combined", { stream: accessLogSteam }));
 app.use(body_parser.urlencoded({ extended: false }));
 app.use(cors());
 app.use(express.json());
@@ -30,6 +44,6 @@ require("./relations/relations")();
 sequelize
   .sync()
   .then(() => {
-    app.listen(5000, () => console.log("APP START"));
+    app.listen(process.env.PORT || 3000, () => console.log("APP START"));
   })
   .catch((err) => console.log(err));

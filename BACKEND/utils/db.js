@@ -1,12 +1,12 @@
 const Sequelize = require("sequelize").Sequelize;
 
 const sequelize = new Sequelize(
-  "expensetracker",
-  "root",
+  process.env.DB,
+  process.env.DB_ROOT,
   process.env.DB_PASSWORD,
   {
     dialect: "mysql",
-    host: "localhost",
+    host: process.env.DB_HOST,
     logging: false,
   }
 );
